@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DITheEasyWayDemo.Services;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,10 @@ namespace DITheEasyWayDemo
         {
             InitializeComponent();
 
+            DependencyService.Register<ICharacterService, MusketeerService>();
+
             MainPage = new MainPage();
+
         }
 
         protected override void OnStart()

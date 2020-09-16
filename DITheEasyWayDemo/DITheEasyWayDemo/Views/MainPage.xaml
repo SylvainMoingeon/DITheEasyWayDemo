@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DITheEasyWayDemo.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:DITheEasyWayDemo.Converters"
+    xmlns:models="clr-namespace:DITheEasyWayDemo.models"
+    xmlns:vm="clr-namespace:DITheEasyWayDemo.ViewModels">
+
+    <ContentPage.BindingContext>
+        <vm:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <converters:CollectionToCountConverter x:Key="CollectionToCountConverter" />
+    </ContentPage.Resources>
+    <StackLayout>
+        <Frame
+            Padding="24"
+            BackgroundColor="#2196F3"
+            CornerRadius="0">
+            <Label
+                FontSize="36"
+                HorizontalTextAlignment="Center"
+                Text="Fictionpedia"
+                TextColor="White" />
+        </Frame>
+        <Label
+            Padding="30,10,30,10"
+            FontSize="Title"
+            Text="Vos personnages de fiction préférés" />
+
+        <Label
+            Padding="30,0,30,0"
+            FontAttributes="Bold"
+            FontSize="Large">
+            <Label.Text>
+                <MultiBinding Mode="OneTime" StringFormat="{}{0} ({1})">
+                    <Binding Path="Category" />
+                    <Binding Converter="{StaticResource CollectionToCountConverter}" Path="Characters" />
+                </MultiBinding>
+            </Label.Text>
+        </Label>
+
+        <CollectionView Margin="30,0,30,0" ItemsSource="{Binding Characters}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:ICharacter">
+                    <Label FontSize="Body" Text="{Binding FullName}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </StackLayout>
+
+</ContentPage>
